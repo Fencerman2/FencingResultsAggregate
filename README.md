@@ -1,5 +1,5 @@
 # FencingResultsAggregate
-A utility to check matchups against other fencers, tournament results, etc. Pulled from AskFred
+A utility to check matchups against other fencers, tournament results, etc.
 
 # Upcoming Features:
 Head-to-Head results - pulls all tournament matchups, broken out by pools and direct elimination bouts
