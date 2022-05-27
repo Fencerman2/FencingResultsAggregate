@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
-from classes.event import Event
-from classes.parsers import PageParser
+from src.classes.event import Event
+from src.classes.parsers import PageLinkParser
+
 import re
 import requests
 
@@ -44,7 +45,7 @@ def fetch_tournaments(session, base_url, first_name, last_name):
     try:
         r = session.get(url)
         tournaments.extend(parse_tournaments_from_page(r.text))
-        page_parser = PageParser()
+        page_parser = PageLinkParser()
         page_parser.feed(r.text)
         pages = page_parser.page_links
 

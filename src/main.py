@@ -1,7 +1,7 @@
 import requests
 
-from classes.fencer import Fencer
-from scraper.fetch_tournaments import fetch_tournaments
+from src.classes.fencer import Fencer
+from src.scraper.fetch_tournaments import fetch_tournaments
 
 from urllib3 import Retry
 
@@ -30,5 +30,8 @@ for i in range(0, int(num_fencers)):
     events = fetch_tournaments(session, "https://askfred.net", first_name, last_name)
     fencers.append(Fencer(first_name, last_name, events))
 
-print(fencers)
+for fencer in fencers:
+    with open("src/examples/" + fencer.fname + ".txt", 'w') as f:
+        for event in fencer.events:
+            f.write(str(event) + "\n")
 

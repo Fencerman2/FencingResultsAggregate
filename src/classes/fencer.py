@@ -1,4 +1,4 @@
-from classes.event import Event
+from src.classes.event import Event
 
 
 class Fencer:
@@ -13,3 +13,15 @@ class Fencer:
     def __repr__(self):
         return str(self.fname + " " + self.lname + " has fenced in " + str(len(self.events)) + " tournament events on askfred")
 
+    def get_id_list(self):
+        ids = []
+        for event in self.events:
+            ids.append(event.tour_id)
+
+        return ids
+
+    def attended_event(self, other: Event):
+        for event in self.events:
+            if event == other:
+                return True
+        return False
