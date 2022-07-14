@@ -1,5 +1,8 @@
-from html.parser import HTMLParser
 from src.utils.http_utils import trim_fredsid
+from src.classes.event import get_event_id_from_name
+from html.parser import HTMLParser
+from bs4 import BeautifulSoup
+import requests
 
 
 class PageLinkParser(HTMLParser):

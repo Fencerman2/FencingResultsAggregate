@@ -6,6 +6,14 @@ class BoutResult:
         self.victory = victory
         self.is_pool = is_pool
 
+    def swap_order(self):
+        first, second = self.score
+        self.score = (second, first)
+        fencer = self.name
+        opponent = self.opponent
+        self.name = opponent
+        self.opponent = fencer
+
 
 class TotalResult:
     def __init__(self, name: str):
