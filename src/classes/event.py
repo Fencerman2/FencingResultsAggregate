@@ -1,5 +1,5 @@
-import requests
-from bs4 import BeautifulSoup
+from src.utils.event_utils import event_name_standardizer
+from src.classes.parsers import get_event_id_from_name
 
 
 class Event:
@@ -22,36 +22,3 @@ class Event:
         else:
             return False
 
-
-def event_name_standardizer(event_name: str):
-    trimmed_name = event_name
-    if "D & Under" in event_name:
-        trimmed_name = event_name.replace("D & Under", "Div3")
-    if "C & Under" in event_name:
-        trimmed_name = event_name.replace("C & Under", "Div2")
-    if "Junior (U20)" in event_name:
-        trimmed_name = event_name.replace("Junior (U20)", "Junior")
-    if "Cadet (U17)" in event_name:
-        trimmed_name = event_name.replace("Cadet (U17)", "Cadet")
-    if "VetCombined" in event_name:
-        trimmed_name = event_name.replace("VetCombined", "Vet Combined")
-    if "Div 1A" in event_name:
-        trimmed_name = event_name.replace("Div 1A", "Div1A")
-    if "EUnder" in event_name:
-        trimmed_name = event_name.replace("EUnder", "E & Under")
-
-    return trimmed_name
-
-
-def get_event_id_from_name(link: str, name: str):
-    r = requests.get(link)
-    html = r.text
-    soup = BeautifulSoup(html, "html.parser")
-    header = soup.find("th")
-    while header is not None:
-        if event_name_standardizer(name) in event_name_standardizer(header.text):
-            a = header.find_next("a")
-            return a.attrs["name"]
-        header = header.find_next("th")
-
-    raise Exception("Could not find event. Event name: %s, link: %s" % (name, link))

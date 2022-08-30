@@ -1,5 +1,5 @@
 from src.utils.http_utils import trim_fredsid
-from src.classes.event import get_event_id_from_name
+from src.utils.event_utils import event_name_standardizer
 from html.parser import HTMLParser
 from bs4 import BeautifulSoup
 import requests
@@ -17,3 +17,18 @@ class PageLinkParser(HTMLParser):
 class BracketParser(HTMLParser):
     def handle_tournament_bracket(self):
         raise "unimplemented"
+
+
+def get_event_id_from_name(link: str, name: str):
+    r = requests.get(link)
+    html = r.text
+    soup = BeautifulSoup(html, "html.parser")
+    header = soup.find("th")
+    while header is not None:
+        if event_name_standardizer(name) in event_name_standardizer(header.text):
+            a = header.find_next("a")
+            return a.attrs["name"]
+        header = header.find_next("th")
+
+    raise Exception("Could not find event. Event name: %s, link: %s" % (name, link))
+

@@ -12,8 +12,8 @@ def is_result_tr(row_class):
 
 def parse_tournaments_from_page(page_text):
     tournaments = []
-    html_tree = BeautifulSoup(page_text, "html.parser")
-    results = html_tree.findAll("tr", class_=is_result_tr)
+    soup = BeautifulSoup(page_text, "html.parser")
+    results = soup.findAll("tr", class_=is_result_tr)
     for result in results:
         link = result.a["href"]
         m = re.search("tournament_id=(\d+)&?", link)
